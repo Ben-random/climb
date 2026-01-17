@@ -24,10 +24,10 @@ go build -o bin/pkg
 
 run
 ```bash
-./bin/pkg <command> <alias> <path/to/script NOTE: only for create or update>
+./bin/pkg create myAlias ./path/to/myScript
 ```
 
 or
 ```bash
-go run main.go <command> <alias> <path/to/script NOTE: only for create or update>
+go run main.go create myAlias ./path/to/myScript
 ```
