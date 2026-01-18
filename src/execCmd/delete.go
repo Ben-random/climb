@@ -7,12 +7,12 @@ import (
 	"os/exec"
 )
 
-func Delete(alias string) {
+func Delete(alias string, dryRun bool) {
 	var msg = "Are you sure you want to delete alias: " + alias + "?"
 	var shouldDelete = utils.ShouldOverrideFile(msg)
 
 	if shouldDelete == false {
-		fmt.Printf("Deletion of alias %s has been aborted", alias)
+		fmt.Printf("Deletion of alias %s has been aborted\n", alias)
 		return
 	}
 
@@ -23,6 +23,10 @@ func Delete(alias string) {
 
 	fmt.Printf("Found command at: %s\n", path)
 
+	if dryRun == true {
+		fmt.Printf("DRY_RUN: File at path %s deleted", path)
+		return
+	}
 	err = os.Remove(path)
 	if err != nil {
 		utils.NewEror("Failed to delete file\n", err)

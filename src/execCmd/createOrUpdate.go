@@ -16,7 +16,7 @@ func getBinDir(home string) string {
 	return filepath.Join(home, ".local", "bin")
 }
 
-func installToLocalBin(pathToBin string, isUpdate bool) {
+func installToLocalBin(pathToBin string, isUpdate bool, dryRun bool) {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		utils.FormatErrorMsg(err)
@@ -37,6 +37,10 @@ func installToLocalBin(pathToBin string, isUpdate bool) {
 	}
 
 	destPath := filepath.Join(binDir, filepath.Base(pathToBin))
+	if dryRun == true {
+		fmt.Printf("DRY_RUN: Write file from %s to %s\n", pathToBin, destPath)
+		return
+	}
 	err = os.WriteFile(destPath, input, 0755)
 	if err != nil {
 		utils.FormatErrorMsg(err)
@@ -45,7 +49,7 @@ func installToLocalBin(pathToBin string, isUpdate bool) {
 	fmt.Printf("Successfully installed to: %s\n", destPath)
 }
 
-func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool) {
+func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dryRun bool) {
 	validatePathToBin(pathToBin)
 
 	var newPath = "user/local/bin/" + alias
@@ -56,26 +60,26 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool) {
 			var msg = "Do you want to override alias" + alias + "? y/n"
 
 			if utils.ShouldOverrideFile(msg) == true {
-				installToLocalBin(pathToBin, true)
+				installToLocalBin(pathToBin, true, dryRun)
 			}
 		} else {
 			log.Fatal("Error: Alias already exists")
 		}
 	} else if canOverrideExisting == false {
 		// Create new alias for bin
-		fmt.Printf("Moving bin %s to %s for alias %s", pathToBin, newPath, alias)
-		installToLocalBin(pathToBin, false)
+		fmt.Printf("Moving bin %s to %s for alias %s\n", pathToBin, newPath, alias)
+		installToLocalBin(pathToBin, false, dryRun)
 	} else {
 		log.Fatal("Error: Alias doesn't exist")
 	}
 }
 
-func Create(alias string, pathToBin string) {
-	CreateOrUpdate(alias, pathToBin, false)
+func Create(alias string, pathToBin string, dryRun bool) {
+	CreateOrUpdate(alias, pathToBin, false, dryRun)
 }
 
-func Update(alias string, pathToBin string) {
-	CreateOrUpdate(alias, pathToBin, true)
+func Update(alias string, pathToBin string, dryRun bool) {
+	CreateOrUpdate(alias, pathToBin, true, dryRun)
 }
 
 func validatePathToBin(pathToBin string) {
