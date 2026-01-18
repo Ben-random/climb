@@ -1,6 +1,6 @@
 # climb 🧗
 
-CLI tool that makes your local scripts and binaries globally available by creating aliases that can be called from anywhere in your terminal.
+CLI tool that makes your local scripts and binaries able to be called from anywhere in your terminal.
 
 ## Example Usage 
 
