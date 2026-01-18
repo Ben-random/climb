@@ -4,14 +4,14 @@ import (
 	"flag"
 
 	"climb/src/cli"
-	"climb/src/utils"
 )
 
 func main() {
+	dryRun := flag.Bool("dry-run", false, "When enabled no files are modified, created or deleted")
+
 	flag.Parse()
 
 	var args = flag.Args()
 
-	utils.ValidateArgs(args)
-	cli.Cmd(args)
+	cli.Cmd(args, *dryRun)
 }
