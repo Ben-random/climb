@@ -105,7 +105,7 @@ Are you sure you want to delete alias: hello? [y/n]
 
 ### `help`
 
-Displays usage information.
+Displays usage information and available commands.
 
 **Syntax:**
 ```bash
@@ -114,7 +114,16 @@ climb help
 
 **Output:**
 ```
-Usage: climb <create|update|delete> <COMMAND> <path/to/script NOTE: create & update ONLY>
+Usage: climb <command> <alias> [script-path]
+
+Commands:
+  create <alias> <script-path>  Create a new alias for a script
+  update <alias> <script-path>  Update an existing alias
+  delete <alias>                Delete an existing alias
+  help                          Show this help message
+
+Options:
+  --dry-run                     Preview changes without modifying files
 ```
 
 ---
@@ -199,13 +208,37 @@ climb create myapp ~/bin/myapp
 
 ### Common Errors
 
-**"Not enough args"**
-- You didn't provide required arguments
-- Use `climb help` to see correct usage
+**"Error: No command provided"**
+- You didn't provide any command
+- Run `climb help` for usage information
 
-**"Too many args"**
-- You provided too many arguments
-- Check the command syntax
+**"Error: Unknown command"**
+- The command you entered is not recognized
+- Valid commands are: create, update, delete, help
+
+**"Error: Command cannot be empty"**
+- The command contains only whitespace
+- Provide a valid command
+
+**"Error: 'create' command requires an alias"**
+- Missing the alias argument for create command
+- Syntax: `climb create <alias> <script-path>`
+
+**"Error: 'create' command requires a script path"**
+- Missing the script path argument for create command
+- Syntax: `climb create <alias> <script-path>`
+
+**"Error: 'delete' command requires an alias"**
+- Missing the alias argument for delete command
+- Syntax: `climb delete <alias>`
+
+**"Error: Alias cannot be empty or whitespace"**
+- The alias provided contains only whitespace
+- Provide a valid alias name
+
+**"Error: Script path cannot be empty or whitespace"**
+- The script path provided contains only whitespace
+- Provide a valid path to your script
 
 **"Alias already exists"**
 - Trying to create an alias that already exists
