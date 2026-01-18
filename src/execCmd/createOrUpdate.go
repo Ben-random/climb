@@ -57,10 +57,12 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dr
 	if utils.AliasExists(alias) {
 		if canOverrideExisting == true {
 			// Update alias for new bin
-			var msg = "Do you want to override alias" + alias + "? y/n"
+			var msg = "Do you want to override alias: " + alias
 
 			if utils.ShouldOverrideFile(msg) == true {
 				installToLocalBin(pathToBin, true, dryRun)
+			} else {
+				fmt.Printf("Overwrite of command %s with binary at %s has been aborted\n", alias, pathToBin)
 			}
 		} else {
 			log.Fatal("Error: Alias already exists")

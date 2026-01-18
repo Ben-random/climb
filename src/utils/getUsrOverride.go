@@ -8,7 +8,7 @@ import (
 )
 
 func ShouldOverrideFile(msg string) bool {
-	fmt.Printf("%s (y/N): ", msg)
+	fmt.Printf("%s (y/n): \n", msg)
 
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
