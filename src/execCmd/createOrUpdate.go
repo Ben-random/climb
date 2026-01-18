@@ -51,8 +51,6 @@ func installToLocalBin(pathToBin string, isUpdate bool, dryRun bool) {
 func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dryRun bool) {
 	validatePathToBin(pathToBin)
 
-	var newPath = "user/local/bin/" + alias
-
 	if utils.AliasExists(alias) {
 		if canOverrideExisting == true {
 			// Update alias for new bin
@@ -69,7 +67,7 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dr
 		}
 	} else if canOverrideExisting == false {
 		// Create new alias for bin
-		fmt.Printf("Moving bin %s to %s for alias %s\n", pathToBin, newPath, alias)
+		fmt.Printf("Creating new alias: %s\n", alias)
 		installToLocalBin(pathToBin, false, dryRun)
 	} else {
 		fmt.Printf("Error: Alias doesn't exist\nDid you mean to use 'create' to create a new alias?\nUsage: climb create <command> <script-path>")

@@ -29,7 +29,7 @@ func Delete(alias string, dryRun bool) {
 	}
 	err = os.Remove(path)
 	if err != nil {
-		utils.NewEror("Failed to delete file\n", err)
+		utils.NewError("Failed to delete file\n", err)
 	}
 
 	fmt.Printf("Successfully deleted alias %s\n", alias)

@@ -11,7 +11,7 @@ func FormatErrorMsg(err error) {
 }
 
 // Create and format a new error from a message and the error object
-func NewEror(msg string, err error) {
+func NewError(msg string, err error) {
 	var newErr = fmt.Errorf(msg, err)
 	FormatErrorMsg(newErr)
 }
