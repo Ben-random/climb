@@ -14,6 +14,10 @@ example
 > Hello
 ```
 
+## Documentation
+
+See docs [here](https://github.com/Ben-random/climb/tree/main/docs)
+
 ## Installation
 
 To install this cli, you will first need the `go` package if you haven't already. You can find instructions to install it [here](https://go.dev/doc/install).
