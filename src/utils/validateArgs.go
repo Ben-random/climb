@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 func usage() {
@@ -24,7 +25,7 @@ func ValidateArgs(args []string) {
 
 	if firstArg == "help" {
 		usage()
-		return
+		os.Exit(0)
 	}
 
 	if firstArg == "delete" {
