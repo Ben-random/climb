@@ -2,7 +2,7 @@
 
 CLI tool that makes your local scripts globally available
 
-## Usage 
+## Example Usage 
 
 ```bash
 ./path/to/script
@@ -12,6 +12,23 @@ climb create example path/to/script
 
 example
 > Hello
+```
+
+## Installation
+
+To install this cli, you will first need the `go` package if you haven't already. You can find instructions to install it [here](https://go.dev/doc/install).
+
+1.) First - You'll need to build the executable:
+
+```bash
+go build -o ./bin/climb
+```
+2.) Next - you need to run the install script
+
+run:
+```bash
+chmod +x ./scripts/install.sh
+./scripts/install.sh
 ```
 
 ## Development
