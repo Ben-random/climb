@@ -1,4 +1,4 @@
-# climb Documentation 🧗
+# Climb Documentation 🧗
 
 ## Overview
 

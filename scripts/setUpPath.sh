@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Define the path clearly
 ZSHRC="$HOME/.zshrc"
 LINE_TO_ADD='export PATH="$HOME/.local/bin:$PATH"'
 
@@ -10,7 +9,6 @@ if [ ! -f "$ZSHRC" ]; then
     touch "$ZSHRC"
 fi
 
-# Now check for the line
 if grep -Fxq "$LINE_TO_ADD" "$ZSHRC"; then
     echo "✅ PATH already configured in $ZSHRC"
 else

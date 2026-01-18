@@ -1,6 +1,6 @@
 # climb 🧗
 
-CLI tool that makes your local scripts globally available
+CLI tool that makes your local scripts and binaries globally available by creating aliases that can be called from anywhere in your terminal.
 
 ## Example Usage 
 
@@ -16,18 +16,11 @@ example
 
 ## Documentation
 
-See docs [here](https://github.com/Ben-random/climb/tree/main/docs)
+See docs [here](https://github.com/Ben-random/climb/tree/main/docs/index.md)
 
 ## Installation
 
 To install this cli, you will first need the `go` package if you haven't already. You can find instructions to install it [here](https://go.dev/doc/install).
-
-1.) First - You'll need to build the executable:
-
-```bash
-go build -o ./bin/climb
-```
-2.) Next - you need to run the install script
 
 run:
 ```bash
@@ -40,7 +33,7 @@ chmod +x ./scripts/install.sh
 Build
 
 ```bash
-go build -o bin/pkg
+go build -o ./bin/climb
 ```
 
 run
