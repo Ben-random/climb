@@ -14,6 +14,21 @@ example
 > Hello
 ```
 
+## Usage
+
+```
+Usage: climb <command> <alias> [script-path]
+
+Commands:
+  create <alias> <script-path>  Create a new alias for a script
+  update <alias> <script-path>  Update an existing alias
+  delete <alias>                Delete an existing alias
+  help                          Show this help message
+
+Options:
+  --dry-run                     Preview changes without modifying files
+```
+
 ## Documentation
 
 See docs [here](https://github.com/Ben-random/climb/tree/main/docs/index.md)
