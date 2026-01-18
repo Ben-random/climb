@@ -17,5 +17,4 @@ else
     echo "📝 Adding .local/bin to PATH in $ZSHRC"
     # Append with a comment for clarity
     echo -e "\n# Added by Climb CLI\n$LINE_TO_ADD" >> "$ZSHRC"
-    echo "🚀 Done! Run 'source ~/.zshrc' to apply changes."
 fi
