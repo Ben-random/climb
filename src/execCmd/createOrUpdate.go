@@ -3,7 +3,6 @@ package execCmd
 import (
 	"climb/src/utils"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -65,14 +64,15 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dr
 				fmt.Printf("Overwrite of command %s with binary at %s has been aborted\n", alias, pathToBin)
 			}
 		} else {
-			log.Fatal("Error: Alias already exists")
+			fmt.Printf("Error: Alias already exists\nDid you mean to use 'update' to update an existing alias?\nUsage: climb update <command> <script-path>")
+			os.Exit(1)
 		}
 	} else if canOverrideExisting == false {
 		// Create new alias for bin
 		fmt.Printf("Moving bin %s to %s for alias %s\n", pathToBin, newPath, alias)
 		installToLocalBin(pathToBin, false, dryRun)
 	} else {
-		log.Fatal("Error: Alias doesn't exist")
+		fmt.Printf("Error: Alias doesn't exist\nDid you mean to use 'create' to create a new alias?\nUsage: climb create <command> <script-path>")
 	}
 }
 
