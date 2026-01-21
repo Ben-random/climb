@@ -48,12 +48,16 @@ chmod +x ./scripts/install.sh
 Build
 
 ```bash
+make build
+```
+
+```bash
 go build -o ./bin/climb
 ```
 
 run
 ```bash
-./bin/pkg create myAlias ./path/to/myScript
+./bin/climb create myAlias ./path/to/myScript
 ```
 
 or
