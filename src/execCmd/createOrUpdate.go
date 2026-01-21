@@ -84,13 +84,10 @@ func Update(alias string, pathToBin string, dryRun bool) {
 
 func validatePathToBin(pathToBin string) {
 	fileInfo, err := os.Stat(pathToBin)
-	if err == nil {
-		return
+	if err != nil {
+		utils.NewError("Error: file "+pathToBin+" is not executable", err)
 	}
 	if fileInfo.Mode().Perm()&0111 == 0 {
-		fmt.Printf("Error: file %s is not executable", pathToBin)
-	} else {
-		fmt.Printf("Error: Failed to find bin at path: %s", pathToBin)
+		utils.NewErrorFromMsg("Error: file " + pathToBin + " is not executable")
 	}
-	os.Exit(1)
 }
