@@ -33,11 +33,19 @@ climb create hello ~/scripts/hello.sh
 After running this command, you can execute `hello` from anywhere in your terminal, and it will run the script located at `~/scripts/hello.sh`.
 
 **Behavior:**
+- Validates that the alias name is valid
 - Validates that the provided path exists
 - Checks if the alias already exists
 - If alias exists, the command will fail with an error
-- Copies the script to `~/.local/bin/` with the alias name
+- Copies the script to `~/.local/bin/` with the alias name (not the original filename)
 - Sets executable permissions (0755)
+
+**Alias Name Requirements:**
+- Must start with a letter or underscore
+- Can contain alphanumeric characters, underscores, and hyphens
+- Cannot contain spaces or special characters
+- Examples of valid aliases: `hello`, `my_script`, `my-app`, `_private`
+- Examples of invalid aliases: `123app`, `my app`, `my@script`, `my.script`
 
 ---
 
@@ -60,6 +68,7 @@ climb update hello ~/scripts/hello_v2.sh
 ```
 
 **Behavior:**
+- Validates that the alias name is valid
 - Validates that the provided path exists
 - Checks if the alias exists
 - If alias doesn't exist, the command will fail with an error
@@ -248,6 +257,12 @@ climb create myapp ~/bin/myapp
 - Trying to update an alias that doesn't exist
 - Use `climb create` instead of `climb update`
 
+**"Invalid alias name"**
+- The alias contains invalid characters or doesn't follow naming rules
+- Alias must start with a letter or underscore
+- Can only contain alphanumeric characters, underscores, and hyphens
+- Examples: `hello`, `my_script`, `my-app` are valid
+
 **"Failed to find bin at path"**
 - The specified script path doesn't exist
 - Verify the path is correct
@@ -260,10 +275,10 @@ climb create myapp ~/bin/myapp
 
 ## Tips
 
-1. **Use absolute paths** when possible to avoid confusion:
-   ```bash
-   climb create myalias ~/scripts/myscript.sh
-   ```
+1. **Paths are automatically converted to absolute:**
+   - Both relative and absolute paths work fine
+   - Relative paths are converted to absolute paths during installation
+   - Examples: `climb create myalias ~/scripts/myscript.sh` or `climb create myalias ./scripts/myscript.sh`
 
 2. **Test with --dry-run** before making changes:
    ```bash
@@ -272,11 +287,13 @@ climb create myapp ~/bin/myapp
 
 3. **Ensure your script has a shebang** (e.g., `#!/bin/bash`) for proper execution
 
-4. **Alias naming conventions:**
-   - Use lowercase names
-   - Avoid spaces
+4. **Alias naming rules:**
+   - Must start with a letter or underscore
+   - Can only contain letters, numbers, underscores, and hyphens
+   - Use lowercase names for consistency
    - Keep names short and memorable
    - Avoid conflicts with existing system commands
+   - Example: `my-deploy-script` ✓, `my deploy script` ✗
 
 5. **Check if an alias exists** before creating:
    ```bash
@@ -338,5 +355,5 @@ The WindowsApps directory is typically already in PATH.
 
 **Script runs but behaves incorrectly:**
 1. Ensure the script has proper shebang line
-2. Check if the script uses relative paths that need to be absolute
+2. If the script uses relative paths internally, make them absolute or run the script from the expected directory
 3. Verify script dependencies are available globally
