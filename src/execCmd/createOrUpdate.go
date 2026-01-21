@@ -30,14 +30,19 @@ func installToLocalBin(pathToBin string, alias string, isUpdate bool, dryRun boo
 		}
 	}
 
-	input, err := os.ReadFile(pathToBin)
+	absPath, err := filepath.Abs(pathToBin)
+	if err != nil {
+		utils.FormatErrorMsg(err)
+	}
+
+	input, err := os.ReadFile(absPath)
 	if err != nil {
 		utils.FormatErrorMsg(err)
 	}
 
 	destPath := filepath.Join(binDir, alias)
 	if dryRun == true {
-		fmt.Printf("DRY_RUN: Write file from %s to %s\n", pathToBin, destPath)
+		fmt.Printf("DRY_RUN: Write file from %s to %s\n", absPath, destPath)
 		return
 	}
 	err = os.WriteFile(destPath, input, 0755)
