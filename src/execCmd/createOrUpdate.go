@@ -15,7 +15,7 @@ func getBinDir(home string) string {
 	return filepath.Join(home, ".local", "bin")
 }
 
-func installToLocalBin(pathToBin string, isUpdate bool, dryRun bool) {
+func installToLocalBin(pathToBin string, alias string, isUpdate bool, dryRun bool) {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		utils.FormatErrorMsg(err)
@@ -35,7 +35,7 @@ func installToLocalBin(pathToBin string, isUpdate bool, dryRun bool) {
 		utils.FormatErrorMsg(err)
 	}
 
-	destPath := filepath.Join(binDir, filepath.Base(pathToBin))
+	destPath := filepath.Join(binDir, alias)
 	if dryRun == true {
 		fmt.Printf("DRY_RUN: Write file from %s to %s\n", pathToBin, destPath)
 		return
@@ -49,6 +49,9 @@ func installToLocalBin(pathToBin string, isUpdate bool, dryRun bool) {
 }
 
 func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dryRun bool) {
+	if !utils.IsValidAliasName(alias) {
+		utils.NewErrorFromMsg("Error: Invalid alias name '" + alias + "'. Alias must start with a letter or underscore, and contain only alphanumeric characters, underscores, and hyphens")
+	}
 	validatePathToBin(pathToBin)
 
 	if utils.AliasExists(alias) {
@@ -57,7 +60,7 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dr
 			var msg = "Do you want to override alias: " + alias
 
 			if utils.ShouldOverrideFile(msg) == true {
-				installToLocalBin(pathToBin, true, dryRun)
+				installToLocalBin(pathToBin, alias, true, dryRun)
 			} else {
 				fmt.Printf("Overwrite of command %s with binary at %s has been aborted\n", alias, pathToBin)
 			}
@@ -68,7 +71,7 @@ func CreateOrUpdate(alias string, pathToBin string, canOverrideExisting bool, dr
 	} else if canOverrideExisting == false {
 		// Create new alias for bin
 		fmt.Printf("Creating new alias: %s\n", alias)
-		installToLocalBin(pathToBin, false, dryRun)
+		installToLocalBin(pathToBin, alias, false, dryRun)
 	} else {
 		fmt.Printf("Error: Alias doesn't exist\nDid you mean to use 'create' to create a new alias?\nUsage: climb create <command> <script-path>")
 	}
