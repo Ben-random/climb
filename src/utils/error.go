@@ -6,18 +6,12 @@ import (
 )
 
 func FormatErrorMsg(err error) {
-	fmt.Print("Unexpected Error")
+	fmt.Print("Unexpected Error\n")
 	log.Fatal(err)
-}
-
-// Create and format a new error from a message and the error object
-func NewError(msg string, err error) {
-	var newErr = fmt.Errorf(msg, err)
-	FormatErrorMsg(newErr)
 }
 
 // Create and format a new Error from message without an error object
 func NewErrorFromMsg(msg string) {
-	var newErr = fmt.Errorf(msg, "")
-	FormatErrorMsg(newErr)
+	fmt.Print("Unexpected Error\n")
+	log.Fatal(msg)
 }
