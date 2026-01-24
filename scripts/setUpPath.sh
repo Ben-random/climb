@@ -1,11 +1,12 @@
 #!/bin/bash
 
-ZSHRC="$HOME/.zshrc"
+ZSHRC="${ZDOTDIR:-$HOME}/.zshrc"
 LINE_TO_ADD='export PATH="$HOME/.local/bin:$PATH"'
 
 # If the file doesn't exist, create it
 if [ ! -f "$ZSHRC" ]; then
     echo "Creating missing .zshrc file..."
+    mkdir -p "$(dirname "$ZSHRC")"
     touch "$ZSHRC"
 fi
 
