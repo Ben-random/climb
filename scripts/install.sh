@@ -14,5 +14,10 @@ chmod +x ./scripts/setUpPath.sh
 # Apply changes to ~/.zshrc
 touch ~/.zshrc
 
-# Create command for climb CLI
-./bin/climb create climb ./bin/climb
+# Create or update command for climb CLI
+if command -v climb >/dev/null 2>&1; then
+ echo "Updating existing climb installation..."
+ ./bin/climb update climb ./bin/climb
+else
+ ./bin/climb create climb ./bin/climb
+fi
