@@ -1,6 +1,8 @@
 #!/bin/bash
+set -e
 
 # Build executable
+mkdir -p ./bin
 go build -o ./bin/climb
 
 # Grant execute perms to path set up script
