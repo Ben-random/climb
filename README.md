@@ -27,6 +27,7 @@ Commands:
 
 Options:
   --dry-run                     Preview changes without modifying files
+  --symlink                     Create a symlink instead of copying a script/binary
 ```
 
 ## Documentation

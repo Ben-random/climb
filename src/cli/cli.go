@@ -5,7 +5,7 @@ import (
 	"climb/src/utils"
 )
 
-func Cmd(args []string, dryRun bool) {
+func Cmd(args []string, dryRun bool, useSymlink bool) {
 	strippedArgs := utils.StripFlagsFromArgs(args)
 	utils.ValidateArgs(strippedArgs)
 
@@ -16,8 +16,8 @@ func Cmd(args []string, dryRun bool) {
 	case "delete":
 		execCmd.Delete(alias, dryRun)
 	case "create":
-		execCmd.Create(alias, args[2], dryRun)
+		execCmd.Create(alias, args[2], dryRun, useSymlink)
 	case "update":
-		execCmd.Update(alias, args[2], dryRun)
+		execCmd.Update(alias, args[2], dryRun, useSymlink)
 	}
 }

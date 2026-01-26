@@ -23,6 +23,7 @@ func usage() {
 	fmt.Println("  help                          Show this help message")
 	fmt.Println("\nOptions:")
 	fmt.Println("  --dry-run                     Preview changes without modifying files")
+	fmt.Println("  --symlink                     Create a symlink instead of copying a script/binary")
 }
 
 func ValidateArgs(args []string) {

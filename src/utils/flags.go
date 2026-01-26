@@ -8,6 +8,7 @@ func getFlags() map[string]struct{} {
 	flags := make(map[string]struct{})
 
 	flags["dry-run"] = struct{}{}
+	flags["symlink"] = struct{}{}
 
 	return flags
 }
