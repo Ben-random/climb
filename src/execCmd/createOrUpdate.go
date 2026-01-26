@@ -5,26 +5,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 )
 
-func getBinDir(home string) string {
-	if runtime.GOOS == "windows" {
-		return filepath.Join(home, "AppData", "local", "Microsoft", "WindowsApps")
-	}
-	return filepath.Join(home, ".local", "bin")
-}
-
 func installToLocalBin(pathToBin string, alias string, isUpdate bool, dryRun bool) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		utils.FormatErrorMsg(err)
-	}
-
-	var binDir = getBinDir(home)
+	var binDir = utils.GetBinDir()
 
 	if isUpdate == false {
-		err = os.MkdirAll(binDir, 0755)
+		err := os.MkdirAll(binDir, 0755)
 		if err != nil {
 			utils.FormatErrorMsg(err)
 		}

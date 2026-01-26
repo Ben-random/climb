@@ -4,6 +4,15 @@
 
 `climb` is a CLI tool that makes your local scripts and binaries globally available by creating aliases that can be called from anywhere in your terminal. It manages scripts by installing them to your local bin directory (`~/.local/bin` on Unix-like systems or `%LOCALAPPDATA%\Microsoft\WindowsApps` on Windows).
 
+### Key Features
+
+- **Easy alias management:** Create, update, and delete command aliases with simple commands
+- **Safety-first design:** Only allows deletion of commands created by `climb` to prevent accidental removal of system commands
+- **Dry-run mode:** Preview changes before committing them with the `--dry-run` flag
+- **Path flexibility:** Works with both relative and absolute paths to your scripts
+- **Validation:** Automatic validation of alias names and script paths
+- **Cross-platform:** Supports Unix-like systems (macOS, Linux) and Windows
+
 ## Installation
 
 See the [README](../README.md) for installation instructions.
@@ -101,9 +110,19 @@ climb delete hello
 
 **Behavior:**
 - Looks up the alias in your PATH
+- Verifies the command exists in your local bin directory (safety check)
+- Prevents deletion of external/system commands
 - Displays the file location
 - Prompts for confirmation before deletion
 - Removes the file from your local bin directory
+
+**Safety Features:**
+- Only allows deletion of commands that were created by `climb`
+- Refuses to delete system or external commands to prevent accidental removal
+- If you try to delete a command that isn't in the climb bin directory, you'll see an error:
+  ```
+  Error: Command 'myalias' not found in bin directory - cannot safely delete
+  ```
 
 **Interactive Prompt:**
 ```
@@ -271,6 +290,14 @@ climb create myapp ~/bin/myapp
 - When deleting, the alias wasn't found
 - The alias may have already been deleted or never existed
 
+**"Command not found in bin directory - cannot safely delete"**
+- You attempted to delete a command that wasn't created by `climb`
+- This is a safety feature to prevent accidental deletion of system commands
+- Only commands in your local bin directory (created by `climb`) can be deleted
+- Verify the command exists in:
+  - Unix-like systems: `~/.local/bin`
+  - Windows: `%LOCALAPPDATA%\Microsoft\WindowsApps`
+
 ---
 
 ## Tips
@@ -357,3 +384,16 @@ The WindowsApps directory is typically already in PATH.
 1. Ensure the script has proper shebang line
 2. If the script uses relative paths internally, make them absolute or run the script from the expected directory
 3. Verify script dependencies are available globally
+
+**Cannot delete an alias with error "not found in bin directory":**
+1. This is a safety feature - `climb` only allows deletion of commands it created
+2. Verify the alias is in your local bin directory:
+   ```bash
+   ls -la ~/.local/bin/<alias>
+   ```
+3. Check that the alias path matches your local bin location:
+   ```bash
+   which <alias>
+   ```
+4. If the command is in a different location (system command, homebrew, etc.), it cannot be deleted with `climb`
+5. To delete such commands, use your system's package manager or remove them manually with `rm`
