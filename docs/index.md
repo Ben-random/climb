@@ -7,6 +7,7 @@
 ### Key Features
 
 - **Easy alias management:** Create, update, and delete command aliases with simple commands
+- **Symlink support:** Create a symlink instead of copying a script/binary
 - **Safety-first design:** Only allows deletion of commands created by `climb` to prevent accidental removal of system commands
 - **Dry-run mode:** Preview changes before committing them with the `--dry-run` flag
 - **Path flexibility:** Works with both relative and absolute paths to your scripts
@@ -16,6 +17,33 @@
 ## Installation
 
 See the [README](../README.md) for installation instructions.
+
+---
+
+## Symlinks vs Copy
+
+By default, `climb` copies your script to `~/.local/bin/`. Use the `--symlink` flag to create a symbolic link instead:
+
+```bash
+climb create myalias /path/to/script.sh        # Copy (default)
+climb create --symlink myalias /path/to/script.sh  # Symlink
+```
+
+**Copy Mode:**
+- Independent copy of your script
+- Works if original is moved or deleted
+- Changes to original don't affect alias
+
+**Symlink Mode:**
+- Points to original script
+- Changes to original are reflected automatically
+- Breaks if original is moved or deleted
+
+**Switch between modes using update:**
+```bash
+climb --symlink update myalias /path/to/script.sh  # Copy → Symlink
+climb update myalias /path/to/script.sh            # Symlink → Copy
+```
 
 ---
 
@@ -152,6 +180,7 @@ Commands:
 
 Options:
   --dry-run                     Preview changes without modifying files
+  --symlink                     Create a symlink instead of copying a script/binary
 ```
 
 ---
